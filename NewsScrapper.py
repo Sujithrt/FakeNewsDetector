@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 start = 1
-end = 501
+end = 101
 
 headlines = []
 news = []
@@ -38,7 +38,7 @@ for i in range(len(target)):  # converting real to 1 and fake to 0
         target[i] = 0
 
 headers = ['News', 'Target']
-with open('Fake_News_Data.csv', 'a', newline='', encoding='utf-8') as csv_file:  # saving the scraped data to a csv file
+with open('Fake_News_Data_Testing.csv', 'a', newline='', encoding='utf-8') as csv_file:  # saving the scraped data to a csv file
     writer = csv.writer(csv_file)
     writer.writerow(headers)
     for i in range(len(target)):
