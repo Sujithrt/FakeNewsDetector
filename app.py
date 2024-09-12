@@ -5,8 +5,7 @@ from tensorflow.keras.preprocessing.text import one_hot
 import re
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-
-from fakenewsdetector import model
+from tensorflow.keras.models import load_model
 
 """Flask Framework Begins"""
 
@@ -25,6 +24,7 @@ def home():
 @cross_origin()
 def predict():
     if request.method == "POST":
+        model = load_model('model.h5')
         news = (request.form["News"])
         corpus = []
         review = re.sub('[^a-zA-Z]', ' ', news)
@@ -42,9 +42,9 @@ def predict():
         embedded_docs = pad_sequences(onehot_repr, padding='pre', maxlen=20)
         print(embedded_docs)
         prediction = model.predict(embedded_docs)
-        print(prediction)
+        print(prediction[0][0])
 
-        if prediction > 0.1:
+        if prediction[0][0] > 0.5:
             output = "Real"
         else:
             output = "Fake"
